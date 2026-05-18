@@ -16,6 +16,8 @@ function insertNewUser($pdo, $username, $password) {
 		$executeQuery = $stmt->execute([$username, $password]);
 
 		if ($executeQuery) {
+			$user_id = $pdo->lastInsertId();
+			logAction($pdo, 'CREATE', 'User', $user_id, $username, "Registered new account: $username");
 			$_SESSION['message'] = "User successfully registered";
 			return true;
 		}
